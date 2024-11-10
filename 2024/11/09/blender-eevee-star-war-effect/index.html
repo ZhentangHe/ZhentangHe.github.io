@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="管道实现 Shift a 添加一个柱体， r x 90 Enter 以 x 轴为轴旋转 90 度， s y 8 沿 y 轴缩放 8 倍。   Tab 进入编辑模式，在左上角选择面选择模式，按住 Shift 选择柱体的两个面，x 删除这两个面。    粒子生成 再次 Tab 进入物体模式，Shift a 添加一个经纬球，g 将它挪开，s y 沿 y 轴放大到合适大小，s 调整缩小到合适大小。   按">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blender EEVEE 星球大战效果">
+<meta property="og:url" content="https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/index.html">
+<meta property="og:site_name" content="Zhentang 的博客">
+<meta property="og:description" content="管道实现 Shift a 添加一个柱体， r x 90 Enter 以 x 轴为轴旋转 90 度， s y 8 沿 y 轴缩放 8 倍。   Tab 进入编辑模式，在左上角选择面选择模式，按住 Shift 选择柱体的两个面，x 删除这两个面。    粒子生成 再次 Tab 进入物体模式，Shift a 添加一个经纬球，g 将它挪开，s y 沿 y 轴放大到合适大小，s 调整缩小到合适大小。   按">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-09T04:41:52.000Z">
+<meta property="article:modified_time" content="2024-11-10T15:09:51.736Z">
+<meta property="article:author" content="Zhentang He">
+<meta property="article:tag" content="Blender">
+<meta property="article:tag" content="EEVEE">
+<meta property="article:tag" content="Visual Effect">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Blender EEVEE 星球大战效果</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/ZhentangHe">项目</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/11/10/blender-4-x-fundamentals/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/11/09/hexo-blog-config/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&text=Blender EEVEE 星球大战效果"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&is_video=false&description=Blender EEVEE 星球大战效果"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Blender EEVEE 星球大战效果&body=Check out this article: https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&name=Blender EEVEE 星球大战效果&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&t=Blender EEVEE 星球大战效果"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">管道实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%92%E5%AD%90%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">粒子生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA%E8%BF%90%E5%8A%A8"><span class="toc-number">3.</span> <span class="toc-text">摄像机运动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BE%93%E5%87%BA"><span class="toc-number">4.</span> <span class="toc-text">渲染输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-Bloom-%E6%95%88%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">关于 Bloom 效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">6.</span> <span class="toc-text">结语</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Blender EEVEE 星球大战效果
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zhentang He</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-09T04:41:52.000Z" class="dt-published" itemprop="datePublished">2024-11-09</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%BB%BA%E6%A8%A1%E4%B8%8E%E6%B8%B2%E6%9F%93/">建模与渲染</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Blender/" rel="tag">Blender</a>, <a class="p-category" href="/tags/EEVEE/" rel="tag">EEVEE</a>, <a class="p-category" href="/tags/Visual-Effect/" rel="tag">Visual Effect</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="管道实现"><a href="#管道实现" class="headerlink" title="管道实现"></a>管道实现</h2><ol>
+<li><code>Shift a</code> 添加一个柱体， <code>r x 90 Enter</code> 以 x 轴为轴旋转 90 度， <code>s y 8</code> 沿 y 轴缩放 8 倍。  </li>
+<li><code>Tab</code> 进入编辑模式，在左上角选择面选择模式，按住 <code>Shift</code> 选择柱体的两个面，<code>x</code> 删除这两个面。  </li>
+</ol>
+<h2 id="粒子生成"><a href="#粒子生成" class="headerlink" title="粒子生成"></a>粒子生成</h2><ol>
+<li>再次 <code>Tab</code> 进入物体模式，<code>Shift a</code> 添加一个经纬球，<code>g</code> 将它挪开，<code>s y</code> 沿 y 轴放大到合适大小，<code>s</code> 调整缩小到合适大小。  </li>
+<li>按住 <code>z</code> 键转入渲染模式，在材质选项卡中新建一个材质，将表面类型从 <code>Principled BSDF/ 原理化 BSDF</code> 改为 <code>Emission/ 自发光</code>，调整合适的颜色和强度&#x2F;力度。  </li>
+<li>按住 <code>z</code> 回到实体模式，选中柱体，在粒子选项卡中新建一个粒子系统，将类型从 <code>Emitter/ 发射器</code> 改为 <code>Hair/ 头发</code>，在渲染属性中将 <code>Render As/ 渲染为</code> 从 <code>Path/ 路径</code> 改为 <code>Object/ 对象</code>，在 <code>Instance Object/ 实例对象</code> 中选择球体，勾选 <code>Object Rotation/ 物体旋转</code>，调整 <code>Scale/ 缩放</code> 和 <code>Scale Randomness/ 缩放随机性</code> 到合适大小。</li>
+<li>按住 <code>z</code> 键转入渲染模式，把世界选项卡中的背景颜色改为黑色以便于观察效果。</li>
+<li>（可选）选中柱体，在修改器选项卡中添加一个 <code>Wireframe/ 线框</code> 修改器，调整 <code>Thickness/ 粗细</code> 到0。</li>
+<li>选中柱体，<code>m</code>添加一个新的集合，将柱体移动到集合中，<code>Shift a</code> 添加一个复制，<code>Shift Space + g</code> 切换成移动模式，按住 <code>Ctrl</code> 拖动坐标轴复制到合适位置，<code>Shift d</code> 复制多次，并使用鼠标中键限制移动方向。  </li>
+</ol>
+<h2 id="摄像机运动"><a href="#摄像机运动" class="headerlink" title="摄像机运动"></a>摄像机运动</h2><ol>
+<li><code>~</code>切换到前视图，<code>Shift a</code> 添加一个摄像机，此时摄像机的视角刚好位于柱体构成的管道中并望向前方。使用 <code>Shift Space + g</code> 切换成移动模式，按住 <code>Ctrl</code> 拖动坐标轴移动到管道的一端，如果有其他摄像机就删除掉，小键盘 <code>0</code> 切换到摄像机视角检查效果。</li>
+<li>选中摄像机，在（默认）第一帧给它的 y 轴位置添加一个关键帧，然后在下方的时间轴中选择 80 帧，将摄像机移动到管道的另一端，再次给它的 y 轴位置添加一个关键帧，按 <code>Space</code> 播放动画查看效果。  </li>
+<li>选中绿色的摄像机图标，将 <code>Focal Length/ 焦距</code> 调整到合适大小，按 <code>Space</code> 播放动画查看效果。</li>
+<li>此外，可以调整球体大小和粒子数量等改善效果。  </li>
+<li><code>Shift a</code> 添加一个立方体，<code>s 8</code> 放缩并移入之前创建的集合中，切换到上方的着色选项卡，新建一个材质，删除 <code>Principled BSDF/ 原理化 BSDF</code>，添加 <code>Principal Volume/ 原理化体积</code>，把体积属性连接到材质输出的体积上，适当降低 <code>Density/ 密度</code>。</li>
+</ol>
+<h2 id="渲染输出"><a href="#渲染输出" class="headerlink" title="渲染输出"></a>渲染输出</h2><p>TODO  </p>
+<h2 id="关于-Bloom-效果"><a href="#关于-Bloom-效果" class="headerlink" title="关于 Bloom 效果"></a>关于 Bloom 效果</h2><p>可以在 <code>Render Properties/ 渲染属性</code> 中找到 <code>Bloom/ 泛光</code> 选项，但是在 EEVEE 中已经被移除了。因此我们可以使用合成器来模拟泛光效果。<br>打开合成选项卡，拉出来一个新的视图用来实时查看效果（记得把视图着色方式的合成器从已禁用改为摄像机或者总是），在合成视图中勾选 <code>Use Nodes/ 使用节点</code>，<code>Shift a</code> 添加 <code>Glare/ 辉光</code> 节点，挪到两个节点之间自动连接，把条斑改成辉光，调整其他属性来模拟泛光效果。  </p>
+
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>大部分内容参考了 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7SryYK0fYv8">Create the Light Speed Star Wars Effect in Blender &amp; Eevee (Blender Tutorial)</a> 教程，感谢作者的分享。  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/ZhentangHe">项目</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">管道实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%92%E5%AD%90%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">粒子生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA%E8%BF%90%E5%8A%A8"><span class="toc-number">3.</span> <span class="toc-text">摄像机运动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BE%93%E5%87%BA"><span class="toc-number">4.</span> <span class="toc-text">渲染输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-Bloom-%E6%95%88%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">关于 Bloom 效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">6.</span> <span class="toc-text">结语</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&text=Blender EEVEE 星球大战效果"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&is_video=false&description=Blender EEVEE 星球大战效果"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Blender EEVEE 星球大战效果&body=Check out this article: https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&title=Blender EEVEE 星球大战效果"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&name=Blender EEVEE 星球大战效果&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhentanghe.github.io/2024/11/09/blender-eevee-star-war-effect/&t=Blender EEVEE 星球大战效果"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Zhentang He
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/ZhentangHe">项目</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

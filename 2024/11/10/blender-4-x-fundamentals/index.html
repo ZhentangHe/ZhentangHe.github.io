@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言本文使用 Steam 版本的 最新 LTS Blender，4.x 版本的 Blender 带来了很多新特性，比如新的渲染引擎 Cycles X，新的建模工具等等，同时也有一些改动，比如移除了 EEVEE 的 Bloom 效果，调整了一些快捷键等等。主要是为了记录一些常用的操作和技巧，方便本人日后查阅。 功能模块   模块 描述    布局 摆放模型   建模 编辑模型   雕刻 雕刻模型 Z">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blender 4.x 基础">
+<meta property="og:url" content="https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/index.html">
+<meta property="og:site_name" content="Zhentang 的博客">
+<meta property="og:description" content="前言本文使用 Steam 版本的 最新 LTS Blender，4.x 版本的 Blender 带来了很多新特性，比如新的渲染引擎 Cycles X，新的建模工具等等，同时也有一些改动，比如移除了 EEVEE 的 Bloom 效果，调整了一些快捷键等等。主要是为了记录一些常用的操作和技巧，方便本人日后查阅。 功能模块   模块 描述    布局 摆放模型   建模 编辑模型   雕刻 雕刻模型 Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-09T16:19:03.000Z">
+<meta property="article:modified_time" content="2024-11-10T15:09:50.429Z">
+<meta property="article:author" content="Zhentang He">
+<meta property="article:tag" content="Blender">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Blender 4.x 基础</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/ZhentangHe">项目</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/11/09/blender-eevee-star-war-effect/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&text=Blender 4.x 基础"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&is_video=false&description=Blender 4.x 基础"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Blender 4.x 基础&body=Check out this article: https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&name=Blender 4.x 基础&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&t=Blender 4.x 基础"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="toc-number">2.</span> <span class="toc-text">功能模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">视图操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.</span> <span class="toc-text">布局操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">编辑模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%A0%87%E7%9B%B8%E5%85%B3"><span class="toc-number">3.3.1.</span> <span class="toc-text">游标相关</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Blender 4.x 基础
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zhentang He</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-09T16:19:03.000Z" class="dt-published" itemprop="datePublished">2024-11-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%BB%BA%E6%A8%A1%E4%B8%8E%E6%B8%B2%E6%9F%93/">建模与渲染</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Blender/" rel="tag">Blender</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文使用 Steam 版本的 最新 LTS Blender，4.x 版本的 Blender 带来了很多新特性，比如新的渲染引擎 Cycles X，新的建模工具等等，同时也有一些改动，比如移除了 EEVEE 的 Bloom 效果，调整了一些快捷键等等。主要是为了记录一些常用的操作和技巧，方便本人日后查阅。</p>
+<h2 id="功能模块"><a href="#功能模块" class="headerlink" title="功能模块"></a>功能模块</h2><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>布局</td>
+<td>摆放模型</td>
+</tr>
+<tr>
+<td>建模</td>
+<td>编辑模型</td>
+</tr>
+<tr>
+<td>雕刻</td>
+<td>雕刻模型 ZBrush</td>
+</tr>
+<tr>
+<td>UV编辑</td>
+<td>模型 UV 展开</td>
+</tr>
+<tr>
+<td>纹理绘制</td>
+<td>贴图</td>
+</tr>
+<tr>
+<td>着色</td>
+<td>图形学 Shader</td>
+</tr>
+<tr>
+<td>动画</td>
+<td>动画制作</td>
+</tr>
+<tr>
+<td>渲染</td>
+<td>渲染图</td>
+</tr>
+<tr>
+<td>合成</td>
+<td>后期处理</td>
+</tr>
+<tr>
+<td>几何节点</td>
+<td>参数化建模</td>
+</tr>
+<tr>
+<td>脚本</td>
+<td>Python 脚本</td>
+</tr>
+</tbody></table>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p>比较方便的一点是 Blender 在使用组合键时，在最下方会显示当前的操作提示，这样可以方便查看快捷键。</p>
+<h3 id="视图操作"><a href="#视图操作" class="headerlink" title="视图操作"></a>视图操作</h3><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>鼠标中键</code></td>
+<td>旋转视图</td>
+</tr>
+<tr>
+<td><code>Shift + 鼠标中键</code></td>
+<td>平移视图</td>
+</tr>
+<tr>
+<td><code>Ctrl + 鼠标中键</code> 或 <code>滚轮</code></td>
+<td>缩放视图</td>
+</tr>
+<tr>
+<td><code>Home</code></td>
+<td>重置视图</td>
+</tr>
+<tr>
+<td><code>小键盘 0</code></td>
+<td>摄像机视图</td>
+</tr>
+<tr>
+<td><code>小键盘 1</code></td>
+<td>正视图</td>
+</tr>
+<tr>
+<td><code>小键盘 3</code></td>
+<td>右视图</td>
+</tr>
+<tr>
+<td><code>小键盘 5</code></td>
+<td>透视视图</td>
+</tr>
+<tr>
+<td><code>小键盘 7</code></td>
+<td>顶视图</td>
+</tr>
+<tr>
+<td><code>小键盘 9</code></td>
+<td>当前视图反转</td>
+</tr>
+<tr>
+<td><code>左键</code>拉动边框</td>
+<td>新建并列窗口</td>
+</tr>
+</tbody></table>
+<h3 id="布局操作"><a href="#布局操作" class="headerlink" title="布局操作"></a>布局操作</h3><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Shift + A</code></td>
+<td>添加物体</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>显示&#x2F;隐藏工具栏</td>
+</tr>
+<tr>
+<td><code>Shift + Space</code></td>
+<td>使用工具栏</td>
+</tr>
+<tr>
+<td>框选状态下<code>左键</code></td>
+<td>选中物体</td>
+</tr>
+<tr>
+<td>移动状态下<code>左键</code></td>
+<td>按轴&#x2F;面移动物体</td>
+</tr>
+<tr>
+<td>旋转状态下<code>左键</code></td>
+<td>按视线&#x2F;面旋转物体</td>
+</tr>
+<tr>
+<td>缩放状态下<code>左键</code></td>
+<td>按轴&#x2F;面&#x2F;整体缩放物体</td>
+</tr>
+<tr>
+<td><code>左键</code>长按缩放</td>
+<td>缩放罩体</td>
+</tr>
+<tr>
+<td>变换状态下<code>左键</code></td>
+<td>综合变换物体</td>
+</tr>
+<tr>
+<td>以上状态下<code>中键</code></td>
+<td>吸附到轴上完成变换</td>
+</tr>
+<tr>
+<td><code>G [X, Y, Z] 数字</code></td>
+<td>沿轴移动物体</td>
+</tr>
+<tr>
+<td><code>R [X, Y, Z] 数字</code></td>
+<td>沿轴旋转物体</td>
+</tr>
+<tr>
+<td><code>S [X, Y, Z] 数字</code></td>
+<td>沿轴缩放物体</td>
+</tr>
+<tr>
+<td>标注状态下<code>左键</code></td>
+<td>添加标注</td>
+</tr>
+<tr>
+<td>测量状态下<code>左键</code></td>
+<td>测量距离</td>
+</tr>
+<tr>
+<td>添加状态下<code>左键</code></td>
+<td>添加物体，会吸附到合适位置</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>显示&#x2F;隐藏属性栏</td>
+</tr>
+<tr>
+<td><code>Shift + D</code></td>
+<td>复制物体</td>
+</tr>
+</tbody></table>
+<h3 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h3><p>该模式下可以对物体进行编辑，包括顶点、边、面及其组合等。</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Tab</code></td>
+<td>进入&#x2F;退出编辑模式（以上操作亦适用）</td>
+</tr>
+<tr>
+<td><code>Alt + 左键</code></td>
+<td>选择子元素&#x2F;循环选择（顶点、边、面）</td>
+</tr>
+<tr>
+<td><code>Alt + Ctrl + 左键</code></td>
+<td>选择子元素&#x2F;环形选择（边、面）</td>
+</tr>
+<tr>
+<td>框选状态下<code>E</code></td>
+<td>挤出顶点&#x2F;边&#x2F;面，类似 SolidWorks 的拉伸</td>
+</tr>
+<tr>
+<td>框选状态下<code>Alt + E</code></td>
+<td>其他挤出操作，默认选取的平均法向量，可选各朝向法向挤出</td>
+</tr>
+<tr>
+<td>框选状态下<code>I</code></td>
+<td>内插面，组合挤出使用类似 SolidWorks 的抽壳</td>
+</tr>
+<tr>
+<td>框选状态下<code>Ctrl + B</code></td>
+<td>倒角</td>
+</tr>
+<tr>
+<td>框选状态下<code>Ctrl + R</code></td>
+<td>环切</td>
+</tr>
+<tr>
+<td>框选状态下<code>K</code></td>
+<td>切割</td>
+</tr>
+<tr>
+<td>框选状态下<code>F</code></td>
+<td>连接顶点线</td>
+</tr>
+<tr>
+<td>框选状态下<code>Ctrl + X</code></td>
+<td>融并</td>
+</tr>
+<tr>
+<td>框选状态下<code>Ctrl + Shift + B</code></td>
+<td>布尔操作</td>
+</tr>
+</tbody></table>
+<h4 id="游标相关"><a href="#游标相关" class="headerlink" title="游标相关"></a>游标相关</h4><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Shift + 右键</code></td>
+<td>移动游标</td>
+</tr>
+<tr>
+<td><code>Shift + S</code></td>
+<td>设置游标位置</td>
+</tr>
+<tr>
+<td><code>Shift + C</code></td>
+<td>重置游标位置</td>
+</tr>
+<tr>
+<td><code>N</code> + 锁定到3D游标</td>
+<td>以游标为中心视图</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/ZhentangHe">项目</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="toc-number">2.</span> <span class="toc-text">功能模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">基础操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">视图操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E6%93%8D%E4%BD%9C"><span class="toc-number">3.2.</span> <span class="toc-text">布局操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">编辑模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%A0%87%E7%9B%B8%E5%85%B3"><span class="toc-number">3.3.1.</span> <span class="toc-text">游标相关</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&text=Blender 4.x 基础"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&is_video=false&description=Blender 4.x 基础"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Blender 4.x 基础&body=Check out this article: https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&title=Blender 4.x 基础"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&name=Blender 4.x 基础&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhentanghe.github.io/2024/11/10/blender-4-x-fundamentals/&t=Blender 4.x 基础"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Zhentang He
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/ZhentangHe">项目</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
